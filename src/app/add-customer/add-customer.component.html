@@ -1,0 +1,124 @@
+<div [hidden]="flag">
+
+  <form [formGroup]="registerUser" autocomplete="off">
+    <mat-accordion class="example-headers-align">
+      <div class="mat-elevation-z8">
+        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Personal Details
+            </mat-panel-title>
+            <mat-icon>account_circle</mat-icon>
+          </mat-expansion-panel-header>
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>Enter your Full Name</mat-label>
+              <input type="text" id="fullName" matInput required placeholder="Enter Full Name"
+                formControlName="FullName">
+              <mat-error *ngIf="f.FullName.hasError('required')">You must enter a value</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>Mobile Number</mat-label>
+
+              <input type="tel" id="MobileNumber" matInput required placeholder="Enter Mobile Number"
+                formControlName="MobileNumber">
+              <mat-error *ngIf="f.MobileNumber.hasError('required')">You must enter a value</mat-error>
+              <!-- <mat-error *ngIf="f.MobileNumber.hasError('minlength')">Mobile Number Must be 10 Digits</mat-error> -->
+              <mat-error *ngIf="f.MobileNumber.hasError('pattern')">Mobile Numberdd Must be 10 Digits</mat-error>
+
+
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <!-- <mat-form-field appearance="outline">-->
+            <mat-label style="font-size: large;">Gender : </mat-label>
+            <mat-radio-group aria-label="Select an option" formControlName="Gender">
+              <mat-radio-button value="Male" [checked]=true>Male</mat-radio-button>
+              <mat-radio-button value="Female">Female</mat-radio-button>
+            </mat-radio-group>
+
+          </div>
+          <div class="form-group">
+            <mat-form-field appearance="outline">
+              <mat-label>State</mat-label>
+              <mat-select formControlName="State" required>
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let state of State" [value]="state">
+                  {{state}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="f.State.hasError('required')">Please choose State</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+              <mat-label>City</mat-label>
+              <mat-select formControlName="City" required>
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let city of City" [value]="city.name">
+                  {{city.name}}
+                </mat-option>
+              </mat-select>
+              <mat-error *ngIf="f.City.hasError('required')">Please choose City</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field color="accent" appearance="outline">
+              <mat-label>Date Of Birth:</mat-label>
+              <input type="date" matInput formControlName="DOB">
+              <!-- <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle> -->
+              <!-- <mat-datepicker #picker1></mat-datepicker> -->
+              <mat-error *ngIf="f.DOB.hasError('required')">Please Enter Date Of Birth</mat-error>
+
+            </mat-form-field>
+          </div>
+
+          <mat-action-row>
+            <button mat-button color="primary" (click)="nextStep()">Next</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      </div>
+      <div class="mat-elevation-z8 mt-2">
+        <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Account Details
+            </mat-panel-title>
+            <mat-icon>account_circle</mat-icon>
+          </mat-expansion-panel-header>
+
+          <mat-form-field appearance="outline">
+            <mat-label>User Name</mat-label>
+            <input type="text" id="username" matInput required placeholder="Ex.example@example.com"
+              formControlName="username">
+            <mat-error *ngIf="f.username.hasError('required')">You must enter a value</mat-error>
+            <mat-error *ngIf="f.username.hasError('pattern')">Please Enter Valid Username</mat-error>
+
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Password</mat-label>
+            <input type="password" id="password" matInput required placeholder="Enter Password"
+              formControlName="password">
+            <mat-error *ngIf="f.password.hasError('required')">You must enter a value</mat-error>
+            <!-- <mat-error *ngIf="f.username.hasError('pattern')">Please Enter Valid Username</mat-error> -->
+
+          </mat-form-field>
+
+          <mat-action-row>
+            <button mat-button color="warn" (click)="prevStep()">Previous</button>
+            <button mat-button color="primary" (click)="onSubmit()" [disabled]="!registerUser.valid">Submit</button>
+          </mat-action-row>
+        </mat-expansion-panel>
+      </div>
+
+    </mat-accordion>
+  </form>
+
+</div>
+
+
+<div [hidden]="!flag">
+  <p>Submitted Successfully! -> <span class="badge badge-light">{{registerUser.value["FullName"]}}</span></p>
+  <div class="btn-group btn-group-sm">
+    <button type="button" class="btn btn-dark" (click)="goBack()">Back</button>&nbsp;
+    <button type="button" class="btn btn-dark" (click)="newCustomer(); registerUser.reset()">Continue</button>
+  </div>
+</div>

@@ -1,0 +1,115 @@
+<h1>Demo</h1>
+
+<mat-table #table [dataSource]="dataSource" matSort>
+
+
+  <ng-container matColumnDef="FullName">
+    <mat-header-cell mat-sort-header *matHeaderCellDef>Name</mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <ng-container *ngIf="!editUsr.id || !user.id || user.id!==editUsr.id">
+        <p class="text-truncate">{{user.FullName || 'N/A'}} </p>
+      </ng-container>
+      <ng-container *ngIf="editUsr.id && user.id && user.id===editUsr.id">
+        <mat-form-field appearance="outline">
+          <input matInput placeholder="Name" [disabled]="editdisabled" name="FullName" [(ngModel)]="user.FullName">
+        </mat-form-field>
+      </ng-container>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="MobileNumber">
+    <mat-header-cell mat-sort-header *matHeaderCellDef>Mobile Number</mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <ng-container *ngIf="!editUsr.id || !user.id || user.id!==editUsr.id">
+        <p class="text-truncate">{{user.MobileNumber || 'N/A'}} </p>
+      </ng-container>
+      <ng-container *ngIf="editUsr.id && user.id && user.id===editUsr.id">
+        <mat-form-field appearance="outline">
+          <input matInput placeholder="MobileNumber" [disabled]="editdisabled" name="MobileNumber"
+            [(ngModel)]="user.MobileNumber">
+        </mat-form-field>
+      </ng-container>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="Gender">
+    <mat-header-cell mat-sort-header *matHeaderCellDef>Gender</mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <ng-container *ngIf="!editUsr.id || !user.id || user.id!==editUsr.id">
+        <p class="text-truncate">{{user.Gender || 'N/A'}} </p>
+      </ng-container>
+      <ng-container *ngIf="editUsr.id && user.id && user.id===editUsr.id">
+        <mat-form-field appearance="outline">
+          <input matInput placeholder="Gender" [disabled]="editdisabled" name="Gender" [(ngModel)]="user.Gender">
+        </mat-form-field>
+      </ng-container>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="City">
+    <mat-header-cell mat-sort-header *matHeaderCellDef>City</mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <ng-container *ngIf="!editUsr.id || !user.id || user.id!==editUsr.id">
+        <p class="text-truncate">{{user.City || 'N/A'}} </p>
+      </ng-container>
+      <ng-container *ngIf="editUsr.id && user.id && user.id===editUsr.id">
+        <mat-form-field appearance="outline">
+          <input matInput placeholder="City" [disabled]="editdisabled" name="City" [(ngModel)]="user.City">
+        </mat-form-field>
+      </ng-container>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="State">
+    <mat-header-cell mat-sort-header *matHeaderCellDef>State</mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <ng-container *ngIf="!editUsr.id || !user.id || user.id!==editUsr.id">
+        <p class="text-truncate">{{user.State || 'N/A'}} </p>
+      </ng-container>
+      <ng-container *ngIf="editUsr.id && user.id && user.id===editUsr.id">
+        <mat-form-field appearance="outline">
+          <input matInput placeholder="State" [disabled]="editdisabled" name="State" [(ngModel)]="user.State">
+        </mat-form-field>
+      </ng-container>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="DOB">
+    <mat-header-cell mat-sort-header *matHeaderCellDef>Date Of Birth</mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <ng-container *ngIf="!editUsr.id || !user.id || user.id!==editUsr.id">
+        <p class="text-truncate">{{user.DOB || 'N/A'}} </p>
+      </ng-container>
+      <ng-container *ngIf="editUsr.id && user.id && user.id===editUsr.id">
+        <mat-form-field appearance="outline">
+          <input matInput placeholder="DOB" [disabled]="editdisabled" name="DOB" [(ngModel)]="user.DOB">
+        </mat-form-field>
+      </ng-container>
+    </mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="username">
+    <mat-header-cell mat-sort-header *matHeaderCellDef>Username</mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <ng-container *ngIf="!editUsr.id || !user.id || user.id!==editUsr.id">
+        <p class="text-truncate">{{user.username || 'N/A'}} </p>
+      </ng-container>
+      <ng-container *ngIf="editUsr.id && user.id && user.id===editUsr.id">
+        <mat-form-field appearance="outline">
+          <input matInput placeholder="username" [disabled]="editdisabled" name="username" [(ngModel)]="user.username">
+        </mat-form-field>
+      </ng-container>
+    </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="Actions">
+    <mat-header-cell *matHeaderCellDef>Action</mat-header-cell>
+    <mat-cell *matCellDef="let user">
+      <mat-icon matTooltip="edit" (click)="editROw(user)">edit</mat-icon>
+      <ng-container *ngIf="editUsr.id && user.id && user.id===editUsr.id">
+        <button mat-raised-button color="accent" matTooltip="Update" class="mr-10 mb-6" [disabled]="editdisabled"
+          (click)="updateEdit()">Update</button>
+        <button mat-raised-button color="warn" matTooltip="Cancel" [disabled]="editdisabled"
+          (click)="cancelEdit()">Cancel</button>
+      </ng-container>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayColumns; sticky:true"></mat-header-row>
+  <mat-row *matRowDef="let user; columns: displayColumns;"></mat-row>
+
+</mat-table>
